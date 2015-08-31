@@ -55,6 +55,7 @@ class Video_link(models.Model):
     landing_page = models.ForeignKey(Landing_page)
     order = models.IntegerField()
     video_url = models.TextField()
+    image_title = models.CharField(max_length=100, default="")
     title = models.CharField(max_length=255)
     publish_time = models.CharField(max_length=30)
     duration = models.CharField(max_length=30)

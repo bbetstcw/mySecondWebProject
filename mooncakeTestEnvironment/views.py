@@ -5,6 +5,9 @@ from mooncakeTestEnvironment.models import Landing_page, Navigation, Navigation_
 from django.template import loader, Template, Context
 from django.template.loader_tags import BlockNode, TextNode
 
+RELATIVE_PATH = "/static/mooncakeTestEnvironment/"
+BLOB_PATH = "http://wacndevelop.blob.core.chinacloudapi.cn/tech-content/"
+
 
 def landingPage(request, service_id):
     service = get_object_or_404(Service, service_id=service_id)
@@ -20,8 +23,12 @@ def landingPage(request, service_id):
                                                                      "first_option_title":first_option_title,
                                                                      "first_option_link":first_option_link,
                                                                      "options":tutorial_options,
-                                                                     "videoLinks":landingpage.video_link_set.all().order_by("order"),
-                                                                     "recentUpdates":landingpage.recent_update_set.all().order_by("order")})
+                                                                     "videoLinks":landingpage.video_link_set.all().order_by("order")[:3],
+                                                                     "recentUpdates":landingpage.recent_update_set.all().order_by("order"),
+                                                                     "cssLink":RELATIVE_PATH+"style/frame2.css",
+                                                                     "jqueryLink":RELATIVE_PATH+"script/jquery-2.1.4.js",
+                                                                     "jsLink":RELATIVE_PATH+"script/responsive.js",
+                                                                     "imgLink":RELATIVE_PATH+"img/"})
 
 def index(request):
     services = Service.objects.all()
@@ -59,5 +66,9 @@ def xmlpagegenerator(request, service_id):
                                 "first_option_link":first_option_link,
                                 "options":tutorial_options,
                                 "videoLinks":landingpage.video_link_set.all().order_by("order"),
-                                "recentUpdates":landingpage.recent_update_set.all().order_by("order")}))
+                                "recentUpdates":landingpage.recent_update_set.all().order_by("order"),
+                                "cssLink":BLOB_PATH+"css/landingpageframe.css",
+                                "jqueryLink":BLOB_PATH+"js/landingpagejquery-2.1.4.js",
+                                "jsLink":BLOB_PATH+"js/landingpageresponsive.js",
+                                "imgLink":BLOB_PATH+"media/"}))
     return render_to_response('mooncakeTestEnvironment/xmlPageGenerator.html',{"xmlContent":template.render({"html_header":html_header, "html_body":html_body, "html_title":service.service_name})})
