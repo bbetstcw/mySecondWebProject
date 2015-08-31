@@ -1,0 +1,15 @@
+{% extends "mooncakeTestEnvironment\page.html" %}
+
+{% block content %}
+<ul style="width:1200px;padding-top:20px">
+    {% for service in services %}
+    <li>
+        <a href="{% url 'landingPage' service.service_id %}">{{service.service_name}}</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
+
+{% block title %}
+    <title>Landingpage Index | Azure</title>
+{% endblock %}
