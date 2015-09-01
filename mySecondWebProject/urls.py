@@ -37,6 +37,8 @@ urlpatterns = patterns('',
     url(r'^landingpage/(?P<service_id>\w+)/$', 'mooncakeTestEnvironment.views.landingPage', name='landingPage'),
     url(r'^landingpage/$', 'mooncakeTestEnvironment.views.index', name='landingPageIndex'),
     url(r'^xmlpagegenerator/(?P<service_id>\w+)/$', 'mooncakeTestEnvironment.views.xmlpagegenerator', name='xmlpagegenerator'),
+    url(r'newrecentupdate/(?P<counter>[0-9]+)/$', 'mooncakeTestEnvironment.views.newRecentUpdate', name='newRecentUpdate'),
+    url(r'^editTutorialSelectList/(?P<service_id>\w+)/$', 'mooncakeTestEnvironment.views.editTutorialSelectList', name='editTutorialSelectList'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

@@ -42,6 +42,9 @@
     <Compile Include="mooncakeTestEnvironment\migrations\0004_default_image_title.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="mooncakeTestEnvironment\migrations\0005_add_2_pages.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="mooncakeTestEnvironment\migrations\__init__.py" />
     <Compile Include="mooncakeTestEnvironment\models.py" />
     <Compile Include="mooncakeTestEnvironment\tests.py" />
@@ -296,6 +299,7 @@
     <Content Include="mooncakeTestEnvironment\templates\mooncakeTestEnvironment\frame.html" />
     <Content Include="mooncakeTestEnvironment\templates\mooncakeTestEnvironment\index.html" />
     <Content Include="mooncakeTestEnvironment\templates\mooncakeTestEnvironment\page.html" />
+    <Content Include="mooncakeTestEnvironment\templates\mooncakeTestEnvironment\updateEditTemplate.html" />
     <Content Include="mooncakeTestEnvironment\templates\mooncakeTestEnvironment\xmlPageGenerator.html" />
     <Content Include="mooncakeTestEnvironment\templates\mooncakeTestEnvironment\xmlTemplate.xml" />
     <Content Include="requirements.txt" />

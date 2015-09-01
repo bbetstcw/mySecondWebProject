@@ -15,6 +15,10 @@ def landingPage(request, service_id):
     tutorial_options = landingpage.tutorial_option_set.all().order_by("order")
     first_option_title = tutorial_options[0].title
     first_option_link = tutorial_options[0].link
+    if "edit" in request.GET:
+        edit = True
+    else:
+        edit = False
     return render_to_response('mooncakeTestEnvironment/frame.html', {"service_name":service.service_name,
                                                                      "subtitle":landingpage.subtitle, 
                                                                      "tutorial_message":landingpage.tutorial_message,
@@ -28,7 +32,9 @@ def landingPage(request, service_id):
                                                                      "cssLink":RELATIVE_PATH+"style/frame2.css",
                                                                      "jqueryLink":RELATIVE_PATH+"script/jquery-2.1.4.js",
                                                                      "jsLink":RELATIVE_PATH+"script/responsive.js",
-                                                                     "imgLink":RELATIVE_PATH+"img/"})
+                                                                     "imgLink":RELATIVE_PATH+"img/",
+                                                                     "edit":edit,
+                                                                     "azure":True})
 
 def index(request):
     services = Service.objects.all()
@@ -72,3 +78,11 @@ def xmlpagegenerator(request, service_id):
                                 "jsLink":BLOB_PATH+"js/landingpageresponsive.js",
                                 "imgLink":BLOB_PATH+"media/"}))
     return render_to_response('mooncakeTestEnvironment/xmlPageGenerator.html',{"xmlContent":template.render({"html_header":html_header, "html_body":html_body, "html_title":service.service_name})})
+
+def newRecentUpdate(request, counter):
+    return render_to_response('mooncakeTestEnvironment/updateEditTemplate.html', {'counter':counter})
+
+def editTutorialSelectList(request, service_id):
+    service = get_object_or_404(Service, service_id=service_id)
+    tutorial_options = service.landing_page_set.all()[0].tutorial_option_set.all().order_by("order")
+    return render_to_response('mooncakeTestEnvironment/selectListTemplate.html',{"options":tutorial_options})

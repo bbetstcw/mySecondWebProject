@@ -25,6 +25,16 @@
             serviceTitle.id = navigationJson.id;
             serviceTitle.innerHTML = navigationJson.service;
             serviceTitle.className = "toggler";
+            {% if edit %}
+            editButt = document.createElement("a");
+            editButt.href = "javascript:editField('"+serviceTitle.id+"', 'text')";
+            editButt.title = "编辑";
+            editImage = document.createElement("img");
+            editImage.src = "/static/mooncakeTestEnvironment/img/edit.png";
+            editImage.style = "width:20px;height:20px;margin-bottom:0px";
+            editButt.appendChild(editImage);
+            serviceTitle.appendChild(editButt);
+            {% endif %}
             mainDiv.appendChild(serviceTitle);
 
             mainUl = document.createElement("ul");
@@ -42,6 +52,37 @@
                 groupTitle.setAttribute("onclick", "show('" + navigationJson.navigation[i].id + "_header" + "')");
                 groupTitle.innerHTML = navigationJson.navigation[i].group;
                 groupTitle.className = "toggler";
+                {% if edit %}
+                groupTitle.id = navigationJson.navigation[i].id + "_group_title";
+                editButt = document.createElement("a");
+                editButt.href = "javascript:editField('"+groupTitle.id+"', 'text')";
+                editButt.title = "编辑";
+                editButt.addEventListener("click", function(e){
+                    if ( e && e.stopPropagation ) 
+                        e.stopPropagation(); 
+                    else
+                        window.event.cancelBubble = true; 
+                });
+                editImage = document.createElement("img");
+                editImage.src = "/static/mooncakeTestEnvironment/img/edit.png";
+                editImage.setAttribute("style", "width:20px;height:20px;margin-bottom:0px");
+                editButt.appendChild(editImage);
+                groupTitle.appendChild(editButt);
+                deleteButt = document.createElement("a");
+                deleteButt.href = "javascript:deleteField('"+groupLi.id+"')";
+                deleteButt.title = "删除";
+                deleteButt.addEventListener("click", function(e){
+                    if ( e && e.stopPropagation ) 
+                        e.stopPropagation(); 
+                    else
+                        window.event.cancelBubble = true; 
+                });
+                deleteImage = document.createElement("img");
+                deleteImage.setAttribute("style", "width:20px;height:20px;margin-bottom:0px");
+                deleteImage.src = "/static/mooncakeTestEnvironment/img/delete.png";
+                deleteButt.appendChild(deleteImage);
+                groupTitle.appendChild(deleteButt);
+                {% endif %}
                 groupLi.appendChild(groupTitle);
                 groupUl = document.createElement("ul");
                 groupUl.id = navigationJson.navigation[i].id;
@@ -49,6 +90,7 @@
                 groupLi.appendChild(groupUl);
                 for (var j = 0; j < navigationJson.navigation[i].articles.length; j++) {
                     articleLi = document.createElement("li");
+                    articleLi.id = navigationJson.navigation[i].articles[j].id+"_li"
                     groupUl.appendChild(articleLi);
                     articleLink = document.createElement("a");
                     articleLink.href = navigationJson.navigation[i].articles[j].link;
@@ -56,6 +98,36 @@
                     articleLink.id = navigationJson.navigation[i].articles[j].id;
                     articleLink.setAttribute("data-link-service-name", navigationJson.id);
                     articleLink.setAttribute("data-link-tag-name", navigationJson.navigation[i].articles[j].id);
+                    {% if edit %}
+                    editButt = document.createElement("a");
+                    editButt.href = "javascript:editField('"+articleLink.id+"', 'link')";
+                    editButt.addEventListener("click", function(e){
+                        if ( e && e.stopPropagation ) 
+                            e.stopPropagation(); 
+                        else
+                            window.event.cancelBubble = true; 
+                    });
+                    editButt.title = "编辑";
+                    editImage = document.createElement("img");
+                    editImage.src = "/static/mooncakeTestEnvironment/img/edit.png";
+                    editImage.setAttribute("style", "width:20px;height:20px;margin-bottom:0px");
+                    editButt.appendChild(editImage);
+                    articleLink.appendChild(editButt);
+                    deleteButt = document.createElement("a");
+                    deleteButt.href = "javascript:deleteField('"+articleLi.id+"')";
+                    deleteButt.title = "删除";
+                    deleteButt.addEventListener("click", function(e){
+                        if ( e && e.stopPropagation ) 
+                            e.stopPropagation(); 
+                        else
+                            window.event.cancelBubble = true; 
+                    });
+                    deleteImage = document.createElement("img");
+                    deleteImage.src = "/static/mooncakeTestEnvironment/img/delete.png";
+                    deleteImage.setAttribute("style", "width:20px;height:20px;margin-bottom:0px");
+                    deleteButt.appendChild(deleteImage);
+                    articleLink.appendChild(deleteButt);
+                    {% endif %}
                     articleLi.appendChild(articleLink);
                 }
             }
@@ -90,6 +162,178 @@
                 $(this).siblings(".article-content").removeAttr('style');
             });
         });
+        {% if edit %}
+        
+        var recentUpdateCount = {{recentUpdates|length}};
+        function addNewUpdate(){
+            var xmlhttp;
+            if (window.XMLHttpRequest)
+            {// code for IE7+, Firefox, Chrome, Opera, Safari
+                xmlhttp=new XMLHttpRequest();
+            }
+            else
+            {// code for IE6, IE5
+                xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange=function()
+            {
+                if (xmlhttp.readyState==4 && xmlhttp.status==200)
+                {
+                    addRecentUpdate = document.getElementById("add_new_update");
+                    newRecentUpdate = document.createElement("div");
+                    newRecentUpdate.className = "wa-content wa-content-3up";
+                    newRecentUpdate.id = "edit_recent_update"+(recentUpdateCount+1);
+                    newRecentUpdate.innerHTML = xmlhttp.responseText;
+                    insertAfter(newRecentUpdate, addRecentUpdate);
+                    element = document.getElementById("edit_recent_title"+(recentUpdateCount+1));
+
+                    textArea = element.getElementsByTagName("textarea")[0];
+                    editting["edit_recent_title"+(recentUpdateCount+1)] = {"element":element, "textField": textArea, "text":document.createTextNode("")};
+
+                    element = document.getElementById("edit_recent_date"+(recentUpdateCount+1));
+                    textArea = element.getElementsByTagName("textarea")[0];
+                    editting["edit_recent_date"+(recentUpdateCount+1)] = {"element":element, "textField": textArea, "text":document.createTextNode("")};
+
+                    element = document.getElementById("edit_recent_description"+(recentUpdateCount+1));
+                    textArea = element.getElementsByTagName("textarea")[0];
+                    editting["edit_recent_description"+(recentUpdateCount+1)] = {"element":element, "textField": textArea, "text":document.createTextNode("")};
+
+                    element = document.getElementById("edit_recent_detail"+(recentUpdateCount+1));
+                    textArea = element.getElementsByTagName("textarea")[0];
+                    editting["edit_recent_detail"+(recentUpdateCount+1)] = {"element":element, "textField": textArea, "text":document.createTextNode("")};
+                    recentUpdateCount++;
+                }
+            }
+            xmlhttp.open("GET","/newrecentupdate/"+(recentUpdateCount+1)+"/",true);
+            xmlhttp.send();
+        }
+        function insertAfter(newNode, referenceNode) {
+            referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+        }
+        {% endif %}
+    </script>
+    <script>
+        var editting = {};
+        function editField(id, type) {
+            element = document.getElementById(id);
+            if(type == "text"){
+                if(!editting[id]){
+                    textField = document.createElement("textarea");
+                    textField.addEventListener("click", function(e){
+                        if ( e && e.stopPropagation ) 
+                            e.stopPropagation(); 
+                        else
+                            window.event.cancelBubble = true; 
+                    });
+                    textField.setAttribute("style","width:85%;")
+                    for (var i = 0; i<element.childNodes.length; i++){
+                        if(element.childNodes[i].nodeValue!=null && element.childNodes[i].nodeValue.trim()!=""){
+                            textField.value = element.childNodes[i].nodeValue.trim();
+                            editting[id]={"element":element, "textField":textField, "text":element.childNodes[i]}
+                            element.replaceChild(textField, element.childNodes[i]);
+                            break;
+                        }
+                    }
+                }
+                else{
+                    editting[id].text.nodeValue = editting[id].textField.value;
+                    a = editting[id].element.replaceChild(editting[id].text, editting[id].textField);
+                    editting[id] = false;
+                }
+            }
+            else if(type == "link"){
+                if(!editting[id]){
+                    container = document.createElement("span");
+                    textField1 = document.createElement("textarea");
+                    textField1.setAttribute("style","width:85%;")
+                    textField2 = document.createElement("textarea");
+                    textField2.setAttribute("style","width:85%;")
+                    for (var i = 0; i<element.childNodes.length; i++){
+                        if(element.childNodes[i].nodeValue!=null && element.childNodes[i].nodeValue.trim()!=""){
+                            textField1.value = element.childNodes[i].nodeValue.trim();
+                            textField2.value = element.href;
+                            editting[id]={"element":element, "container":container, "title":textField1, "link":textField2, "text":element.childNodes[i]}
+                            container.appendChild(textField1);
+                            container.appendChild(textField2);
+                            element.parentElement.insertBefore(container, element);
+                            element.childNodes[i].nodeValue = "";
+                            break
+                        }
+                    }
+                    
+                }
+                else{
+                    editting[id].element.tagName = "a";
+                    editting[id].text.nodeValue = editting[id].title.value;
+                    editting[id].element.href = editting[id].link.value
+                    editting[id].container.parentElement.replaceChild(editting[id].element, editting[id].container);
+                    editting[id] = false;
+                }
+            }
+            else if(type == "select_list"){
+                
+                if(!editting[id]){
+                    var xmlhttp2;
+                    if (window.XMLHttpRequest)
+                    {// code for IE7+, Firefox, Chrome, Opera, Safari
+                        xmlhttp2=new XMLHttpRequest();
+                    }
+                    else
+                    {// code for IE6, IE5
+                        xmlhttp2=new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+                    xmlhttp2.onreadystatechange=function()
+                    {
+                        if (xmlhttp2.readyState==4 && xmlhttp2.status==200)
+                        {
+                            
+                            editSelectList = document.createElement("div");
+                            editSelectList.innerHTML = xmlhttp2.responseText;
+                            editting[id]={"element":element, "editSelectList":editSelectList}
+                            element.parentElement.replaceChild(editSelectList, element);
+                        }
+                    }
+                    
+                    xmlhttp2.open("GET","/editTutorialSelectList/activeDirectory/",true);//TODU
+                    xmlhttp2.send();
+                    
+                }
+                else{
+                    editting[id].editSelectList.parentElement.replaceChild(editting[id].element, editting[id].editSelectList);
+                    editting[id] = false;
+                }
+            }
+        }
+        var tutorialOptionCount = 2; //TODU
+        function addTutorialOption(id){
+            var xmlhttp3;
+            if (window.XMLHttpRequest)
+            {// code for IE7+, Firefox, Chrome, Opera, Safari
+                xmlhttp3=new XMLHttpRequest();
+            }
+            else
+            {// code for IE6, IE5
+                xmlhttp3=new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp3.onreadystatechange=function()
+            {
+                if (xmlhttp3.readyState==4 && xmlhttp3.status==200)
+                {
+                    editSelectList = document.createElement("div");
+                    editSelectList.innerHTML = xmlhttp3.responseText;
+                    tutorialOptionCount++;
+                }
+            }
+                    
+            xmlhttp3.open("GET","/newTutorialOption/"+(tutorialOptionCount+1)+"/",true);
+            xmlhttp3.send();
+        }
+
+        function deleteField(id){
+            element = document.getElementById(id);
+            element.parentElement.removeChild(element);
+        }
+        
     </script>
     <style>
         .old-main-container {
@@ -113,19 +357,42 @@
                         <h1>
                             {{service_name}}文档
                         </h1>
-                        <h5>
+                        <h5 {% if edit %}id="edit_subtitle" {% endif %}>
                             {{subtitle}}
+                            {% if edit %}
+                            <a href="javascript:editField('edit_subtitle', 'text')" title="编辑">
+                                <img src="/static/mooncakeTestEnvironment/img/edit.png" style="width:20px;height:20px;margin-bottom:0px"/>
+                            </a>
+                            {% endif %}
                         </h5>
-                        <label for="dropdown-cta" class="wa-dropdown-label">{{tutorial_message}}</label>
+                        <label for="dropdown-cta" class="wa-dropdown-label" {% if edit %}id="edit_tutorial_message" {% endif %}>
+                            {{tutorial_message}}
+                            {% if edit %}
+                            <a href="javascript:editField('edit_tutorial_message', 'text')" title="编辑">
+                                <img src="/static/mooncakeTestEnvironment/img/edit.png" style="width:20px;height:20px;margin-bottom:0px"/>
+                            </a>
+                            {% endif %}
+                        </label>
                         {% if options|length == 1 %}
                             <p class="tutorial-label">
+                                {% if edit %}
+                                <span id="edit_tutorial_list">
+                                {% endif %}
                                 {{first_option_title}}
+                                {% if edit %}
+                                </span>
+                                {% endif %}
+                                {% if edit %}
+                                <a href="javascript:editField('edit_tutorial_list', 'text')" title="编辑">
+                                    <img src="/static/mooncakeTestEnvironment/img/edit.png" style="width:20px;height:20px;margin-bottom:0px"/>
+                                </a>
+                                {% endif %}
                                 <a class="wa-button wa-button-primary wa-button-mini" href="{{first_option_link}}" data-linker="cta">
                                     入门教程
                                 </a>
                             </p>
                         {% else %}
-                            <div class="wa-dropdown-container wa-dropdown-medium">
+                            <div class="wa-dropdown-container wa-dropdown-medium" {% if edit %}id="edit_tutorial_select_list" {% endif %}>
                                 <select id="dropdown-cta" class="wa-dropdown" data-control="dropdown dropdown-linker" data-linker="cta" onchange="dropdownSelectChange()">
                                     {% for option in options %}
                                     <option value="{{option.link}}">
@@ -138,6 +405,11 @@
                                 </script>
                                 <span id="wa-dropdown-value" class="wa-dropdown-value">{{first_option_title}}</span><span class="wa-dropdown-arrow"></span>
                             </div>
+                            {% if edit %}
+                            <a href="javascript:editField('edit_tutorial_select_list', 'select_list')" title="编辑">
+                                <img src="/static/mooncakeTestEnvironment/img/edit.png" style="width:20px;height:20px;margin-bottom:0px"/>
+                            </a>
+                            {% endif %}
                             <a id="wa-button-link" data-service-name="virtual-machines" href="{{first_option_link}}" class="wa-button wa-button-primary wa-button-mini" data-linker="cta">入门教程</a>
                         {% endif %}
                     </div>
@@ -148,10 +420,14 @@
                     </div>
                     <div class="wa-content wa-content-3up">
                         {% for videoLink in videoLinks%}
-                            <div class="wa-spacer">
+                            <div class="wa-spacer" {% if edit %}id="edit_video{{forloop.counter}}" {% endif %}>
                                 <a href="{{videoLink.video_url}}" data-control="" data-expanding="false" class="wa-video-thumbnail _storage-video-popup" title="{{videoLink.title}}">
                                     <img src="{{imgLink}}{{videoLink.image_title}}.png" alt="{{videoLink.title}}" class="thumbnail" />
+                                    {% if azure %}
                                     <img class="play-icon" src="{{imgLink}}VideoPlay.png" />
+                                    {% else %}
+                                    <img class="play-icon" src="{{imgLink}}VideoPlay.svg" />
+                                    {% endif %}
                                     <span class="metadata">
                                         <span class="date">
                                             <span>{{videoLink.publish_time}}</span>
@@ -162,46 +438,99 @@
                                 <p>
                                     {{videoLink.description}}
                                 </p>
+                                {% if edit %}
+                                <a href="" title="编辑">
+                                    <img src="/static/mooncakeTestEnvironment/img/edit.png" style="width:20px;height:20px;margin-bottom:0px"/>
+                                </a>
+                                <a href="javascript:deleteField('edit_video{{forloop.counter}}')" title="删除">
+                                        <img src="/static/mooncakeTestEnvironment/img/delete.png" style="width:20px;height:20px;margin-bottom:0px"/>
+                                    </a>
+                                {% endif %}
                             </div>
                         {% endfor %}
+                        {% if edit %}
+                        {% if videoLinks|length < 3 %}
+                            <div class="wa-spacer" id="edit_video_add">
+                                <a href="" title="增加视频">
+                                    <img src="{{imgLink}}add-icon-614x460.png" alt="增加视频" class="thumbnail" />
+                                    
+                                </a>
+                                <p>
+                                </p>
+                            </div>
+                        {% endif %}
+                        {% endif %}
                     </div>
                     <div class="wa-content">
                         <a href="/video-center/" class="wa-arrowLink">观看更多视频</a>
                     </div>
                     <div class="wa-content wa-content-divided">
                         <h2>
-                            最新{{service_name}}更新 <a href=""><span class="wa-icon wa-icon-misc-rss"></span></a>
+                            {{service_name}}的最新更新 <a href=""><span class="wa-icon wa-icon-misc-rss"></span></a>
                         </h2>
                     </div>
                     <div class="wa-content wa-content-3up">
+                        {% if edit %}
+                        <div class="wa-content wa-content-3up" id="add_new_update">
+                            <a href="javascript:addNewUpdate()">增加更新</a>
+                        </div>
+                        {% endif %}
                     {% for recent in recentUpdates %}
-                        <div class="wa-content wa-content-3up">
+                        <div class="wa-content wa-content-3up" {% if edit %}id="edit_recent_update{{forloop.counter}}" {% endif %}>
                             <div class="wa-serviceUpdate">
-                                <h4>
+                                <h4 {% if edit %}id="edit_recent_title{{forloop.counter}}" {% endif %}>
                                     {{recent.title}}
+                                    {% if edit %}
+                                    <a href="javascript:editField('edit_recent_title{{forloop.counter}}', 'text')" title="编辑">
+                                        <img src="/static/mooncakeTestEnvironment/img/edit.png" style="width:20px;height:20px;margin-bottom:0px"/>
+                                    </a>
+                                    <a href="javascript:deleteField('edit_recent_update{{forloop.counter}}')" title="删除">
+                                        <img src="/static/mooncakeTestEnvironment/img/delete.png" style="width:20px;height:20px;margin-bottom:0px"/>
+                                    </a>
+                                    {% endif %}
                                 </h4>
-                                <p class="article-date">
+                                <p class="article-date" {% if edit %}id="edit_recent_date{{forloop.counter}}" {% endif %}>
                                     {{recent.date}}
+                                    {% if edit %}
+                                    <a href="javascript:editField('edit_recent_date{{forloop.counter}}', 'text')" title="编辑">
+                                        <img src="/static/mooncakeTestEnvironment/img/edit.png" style="width:20px;height:20px;margin-bottom:0px"/>
+                                    </a>
+                                    {% endif %}
                                 </p>
-                                <p>
+                                <p {% if edit %}id="edit_recent_description{{forloop.counter}}" {% endif %}>
                                     {{recent.description}}
+                                    {% if edit %}
+                                    <a href="javascript:editField('edit_recent_description{{forloop.counter}}', 'text')" title="编辑">
+                                        <img src="/static/mooncakeTestEnvironment/img/edit.png" style="width:20px;height:20px;margin-bottom:0px"/>
+                                    </a>
+                                    {% endif %}
                                 </p>
-                                <p class="article-content" style="display:none">
+                                <p class="article-content" style="display:none"  {% if edit %}id="edit_recent_detail{{forloop.counter}}" {% endif %}>
                                     {{recent.detail}}
+                                    {% if edit %}
+                                    <a href="javascript:editField('edit_recent_detail{{forloop.counter}}', 'text')" title="编辑">
+                                        <img src="/static/mooncakeTestEnvironment/img/edit.png" style="width:20px;height:20px;margin-bottom:0px"/>
+                                    </a>
+                                    {% endif %}
                                 </p>
                                 <a class="wa-arrowLink wa-arrowLink-blue" href="javascript:void(0);">了解更多</a>
                             </div>
                             <a href=""></a>
                         </div>
                     {% endfor %}
+                        
                     </div>
                     <div class="wa-content">
                         <a href="{{update_search_link}}" class="wa-arrowLink">查看更多服务更新</a>
                     </div>
                 </div>
             </div>
-        
         </section>
+        {% if edit %}
+        <div style="float:right;">
+            <input type="button" value="保存" />
+        </div>
+        {% endif %}
     </div>
 
 {% endblock %}
