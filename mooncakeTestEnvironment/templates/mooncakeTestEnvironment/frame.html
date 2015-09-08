@@ -210,6 +210,34 @@
         function insertAfter(newNode, referenceNode) {
             referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
         }
+        var tutorialOptionCount = {{options|length}};
+        function addTutorialOption(id){
+            element = document.getElementById(id);
+            var xmlhttp3;
+            if (window.XMLHttpRequest)
+            {// code for IE7+, Firefox, Chrome, Opera, Safari
+                xmlhttp3=new XMLHttpRequest();
+            }
+            else
+            {// code for IE6, IE5
+                xmlhttp3=new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp3.onreadystatechange=function()
+            {
+                if (xmlhttp3.readyState==4 && xmlhttp3.status==200)
+                {
+                    editSelectList = document.createElement("div");
+                    editSelectList.id = "edit_option_"+(tutorialOptionCount+1);
+                    editSelectList.innerHTML = xmlhttp3.responseText;
+                    element.parentElement.insertBefore(editSelectList, element);
+                    tutorialOptionCount++;
+                }
+            }
+                    
+            xmlhttp3.open("GET","/newTutorialOption/"+(tutorialOptionCount+1)+"/",true);
+            xmlhttp3.send();
+            
+        }
         {% endif %}
     </script>
     <script>
@@ -293,42 +321,86 @@
                             element.parentElement.replaceChild(editSelectList, element);
                         }
                     }
+                    options = element.getElementsByTagName("option");
+                    optionsJson = [];
                     
-                    xmlhttp2.open("GET","/editTutorialSelectList/activeDirectory/",true);//TODU
+                    for(var i = 0; i<options.length; i++){
+                        option = {"title":options[i].innerHTML.trim(), "link":options[i].value.trim()};
+                        optionsJson[i]=option;
+                        
+                    }
+                    optionsJsonStr = JSON.stringify(optionsJson);
+                    xmlhttp2.open("POST","/editTutorialSelectList/activeDirectory/",true);//TODO
+                    xmlhttp2.setRequestHeader("options", optionsJsonStr)
                     xmlhttp2.send();
                     
                 }
                 else{
                     editting[id].editSelectList.parentElement.replaceChild(editting[id].element, editting[id].editSelectList);
+                    divList = editting[id].editSelectList.getElementsByTagName("div");
+                    options = editting[id].element.getElementsByTagName("option");
+                    if(divList.length>options.length){
+                        for(var i = 0; i<divList.length-options.length; i++){
+                            newOption = options[0].cloneNode(true);
+                            options[0].parentElement.appendChild(newOption);
+                        }
+                        options = editting[id].element.getElementsByTagName("option");
+                    }
+                    else if(divList.length<options.length){
+                        for(var i = 0; i<options.length-divList.length; i++){
+                            options[i].parentElement.removeChild(options[i]);
+                        }
+                        options = editting[id].element.getElementsByTagName("option");
+                    }
+                    for(var i = 0; i<divList.length; i++){
+                        textareas = divList[i].getElementsByTagName("textarea");
+                        options[i].value = textareas[1].value;
+                        options[i].innerHTML = textareas[0].value;
+                    }
                     editting[id] = false;
                 }
             }
-        }
-        var tutorialOptionCount = 2; //TODU
-        function addTutorialOption(id){
-            var xmlhttp3;
-            if (window.XMLHttpRequest)
-            {// code for IE7+, Firefox, Chrome, Opera, Safari
-                xmlhttp3=new XMLHttpRequest();
-            }
-            else
-            {// code for IE6, IE5
-                xmlhttp3=new ActiveXObject("Microsoft.XMLHTTP");
-            }
-            xmlhttp3.onreadystatechange=function()
-            {
-                if (xmlhttp3.readyState==4 && xmlhttp3.status==200)
-                {
-                    editSelectList = document.createElement("div");
-                    editSelectList.innerHTML = xmlhttp3.responseText;
-                    tutorialOptionCount++;
+            else if(type == "video"){
+                if(!editting[id]){
+                    var xmlhttp4;
+                    if (window.XMLHttpRequest)
+                    {// code for IE7+, Firefox, Chrome, Opera, Safari
+                        xmlhttp4=new XMLHttpRequest();
+                    }
+                    else
+                    {// code for IE6, IE5
+                        xmlhttp4=new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+                    xmlhttp4.onreadystatechange=function()
+                    {
+                        if (xmlhttp4.readyState==4 && xmlhttp4.status==200)
+                        {
+                            
+                            editSelectList = document.createElement("div");
+                            editSelectList.innerHTML = xmlhttp4.responseText;
+                            editting[id]={"element":element, "editSelectList":editSelectList}
+                            element.parentElement.replaceChild(editSelectList, element);
+                        }
+                    }
+                    aLink = element.getElementsByClassName("wa-video-thumbnail _storage-video-popup")[0];
+                    bgImage = aLink.getElementsByClassName("thumbnail")[0];
+                    description = element.getElementsByTagName("p")[0].innerHTML.trim();
+                    content = {"title":bgImage.alt, };
+                    
+                    for(var i = 0; i<options.length; i++){
+                        option = {"title":options[i].innerHTML.trim(), "link":options[i].value.trim()};
+                        optionsJson[i]=option;
+                        
+                    }
+                    optionsJsonStr = JSON.stringify(optionsJson);
+                    xmlhttp4.open("GET","/editVideo/activeDirectory/?Content="+optionsJsonStr,true);//TODO
+                    xmlhttp4.send();
+                }
+                else{
+                    
                 }
             }
-                    
-            xmlhttp3.open("GET","/newTutorialOption/"+(tutorialOptionCount+1)+"/",true);
-            xmlhttp3.send();
         }
-
         function deleteField(id){
             element = document.getElementById(id);
             element.parentElement.removeChild(element);
@@ -439,7 +511,7 @@
                                     {{videoLink.description}}
                                 </p>
                                 {% if edit %}
-                                <a href="" title="编辑">
+                                <a href="javascript:editField('edit_video{{forloop.counter}}', 'video')" title="编辑">
                                     <img src="/static/mooncakeTestEnvironment/img/edit.png" style="width:20px;height:20px;margin-bottom:0px"/>
                                 </a>
                                 <a href="javascript:deleteField('edit_video{{forloop.counter}}')" title="删除">

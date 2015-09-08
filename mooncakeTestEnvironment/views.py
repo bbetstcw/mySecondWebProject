@@ -4,6 +4,8 @@ from django.shortcuts import render_to_response, get_object_or_404
 from mooncakeTestEnvironment.models import Landing_page, Navigation, Navigation_article, Navigation_group, Recent_update, Service, Tutorial_option, Video_link
 from django.template import loader, Template, Context
 from django.template.loader_tags import BlockNode, TextNode
+import json
+from django.views.decorators.csrf import csrf_exempt
 
 RELATIVE_PATH = "/static/mooncakeTestEnvironment/"
 BLOB_PATH = "http://wacndevelop.blob.core.chinacloudapi.cn/tech-content/"
@@ -82,7 +84,12 @@ def xmlpagegenerator(request, service_id):
 def newRecentUpdate(request, counter):
     return render_to_response('mooncakeTestEnvironment/updateEditTemplate.html', {'counter':counter})
 
+@csrf_exempt
 def editTutorialSelectList(request, service_id):
-    service = get_object_or_404(Service, service_id=service_id)
-    tutorial_options = service.landing_page_set.all()[0].tutorial_option_set.all().order_by("order")
+    for k,v,v2 in request.META:
+        print(k+": "+v+", "+v2)
+    tutorial_options = json.loads(request.META["options"])
     return render_to_response('mooncakeTestEnvironment/selectListTemplate.html',{"options":tutorial_options})
+
+def newTutorialOption(request, counter):
+    return render_to_response("mooncakeTestEnvironment/newTutorialOptionTemplate.html",{"counter":counter});

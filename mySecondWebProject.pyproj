@@ -298,8 +298,11 @@
     <Content Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\虚拟机_files\VideoPlay.svg" />
     <Content Include="mooncakeTestEnvironment\templates\mooncakeTestEnvironment\frame.html" />
     <Content Include="mooncakeTestEnvironment\templates\mooncakeTestEnvironment\index.html" />
+    <Content Include="mooncakeTestEnvironment\templates\mooncakeTestEnvironment\newTutorialOptionTemplate.html" />
     <Content Include="mooncakeTestEnvironment\templates\mooncakeTestEnvironment\page.html" />
+    <Content Include="mooncakeTestEnvironment\templates\mooncakeTestEnvironment\selectListTemplate.html" />
     <Content Include="mooncakeTestEnvironment\templates\mooncakeTestEnvironment\updateEditTemplate.html" />
+    <Content Include="mooncakeTestEnvironment\templates\mooncakeTestEnvironment\videoEditTemplate.html" />
     <Content Include="mooncakeTestEnvironment\templates\mooncakeTestEnvironment\xmlPageGenerator.html" />
     <Content Include="mooncakeTestEnvironment\templates\mooncakeTestEnvironment\xmlTemplate.xml" />
     <Content Include="requirements.txt" />
