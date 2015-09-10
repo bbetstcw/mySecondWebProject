@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.db import models, migrations
 import json
 
-SERVICE_TRANSLATION = {"MFA":"多重身份验证"}
+SERVICE_TRANSLATION = {"multiFactorAuthentication":"多重身份验证"}
 
 JSON_PATH = "./mooncakeTestEnvironment/static/mooncakeTestEnvironment/json/"
 
@@ -70,7 +70,7 @@ def readFileToString(fileName):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('mooncakeTestEnvironment', '0005_add_2_pages'),
+        ('mooncakeTestEnvironment', '0006_add_1_page'),
     ]
 
     operations = [

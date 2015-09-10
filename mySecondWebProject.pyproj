@@ -48,6 +48,7 @@
     <Compile Include="mooncakeTestEnvironment\migrations\0006_add_1_page.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="mooncakeTestEnvironment\migrations\0007_add_1_page.py" />
     <Compile Include="mooncakeTestEnvironment\migrations\__init__.py" />
     <Compile Include="mooncakeTestEnvironment\models.py" />
     <Compile Include="mooncakeTestEnvironment\tests.py" />
