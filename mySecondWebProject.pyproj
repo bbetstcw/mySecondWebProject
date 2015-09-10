@@ -45,6 +45,9 @@
     <Compile Include="mooncakeTestEnvironment\migrations\0005_add_2_pages.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="mooncakeTestEnvironment\migrations\0006_add_1_page.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="mooncakeTestEnvironment\migrations\__init__.py" />
     <Compile Include="mooncakeTestEnvironment\models.py" />
     <Compile Include="mooncakeTestEnvironment\tests.py" />
@@ -93,6 +96,7 @@
     <Content Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\img\Azure-Advanced-Storage-Introduction.png" />
     <Content Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\img\Azure-Cloud Services-Advanced-Features.png" />
     <Content Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\img\Azure-Mobile Services-Data Management.png" />
+    <Content Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\img\azure-mysql-mvp-talk.png" />
     <Content Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\img\Azure-VM-Advanced-Usage.png" />
     <Content Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\img\Azure-Websites-Extended-Features.png" />
     <Content Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\img\Azure媒体服务动态打包介绍.png" />
