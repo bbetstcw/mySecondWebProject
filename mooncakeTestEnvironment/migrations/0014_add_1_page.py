@@ -21,6 +21,10 @@ def addDataToTable(apps, schema_editor):
     for service_id,service_name in SERVICE_TRANSLATION.items():
         service = Service(service_id=service_id, service_name=service_name)
         service.save()
+        metaJson = readFileToString(JSON_PATH+"metaJson/"+service.service_id+".json")
+        meta = json.loads(metaJson)
+        metaData = Meta_data(service=service, metat_keywords=meta["metat_keywords"], meta_description=meta["meta_description"])
+        metaData.save()
         navigationJson = readFileToString(JSON_PATH+"navigationJson/"+service_id+".json")
         navigationWhole = json.loads(navigationJson)
         navigation = Navigation(service=service, html_id=navigationWhole["id"])
