@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <localize>
   <umbTextpage id="19502" parentID="18486" level="4" writerID="106" creatorID="106" nodeType="1059" template="1052" sortOrder="30" createDate="2015-8-24T14:55:52" updateDate="" nodeName="Aile" urlName="aile" writerName="content" creatorName="content" path="-1,11978,19421,18486,19502" isDoc="">
     <bodyText>
@@ -7,9 +7,9 @@
       ]]>
     </bodyText>
     <umbracoNaviHide>0</umbracoNaviHide>
-    <pageTitle>{{html_title}}</pageTitle>
-    <metaKeywords></metaKeywords>
-    <metaDescription><![CDATA[]]></metaDescription>
+    <pageTitle>虚拟机</pageTitle>
+    <metaKeywords>{{metaKeywords}}</metaKeywords>
+    <metaDescription><![CDATA[{{metaDescription}}]]></metaDescription>
     <linkid>case-studies-Aile</linkid>
     <urlDisplayName></urlDisplayName>
     <headerExpose></headerExpose>

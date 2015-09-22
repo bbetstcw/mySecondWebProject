@@ -6,7 +6,7 @@
     <RootNamespace>mySecondWebProject</RootNamespace>
     <InterpreterId>{b7acaac5-85bc-4154-a872-d3d81643bd84}</InterpreterId>
     <InterpreterVersion>3.4</InterpreterVersion>
-    <NameOfLastUsedPublishProfile>firstWebApp - Web Deploy</NameOfLastUsedPublishProfile>
+    <NameOfLastUsedPublishProfile>firstWebApp - Web Deploy (2)</NameOfLastUsedPublishProfile>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -49,6 +49,17 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="mooncakeTestEnvironment\migrations\0007_add_1_page.py" />
+    <Compile Include="mooncakeTestEnvironment\migrations\0008_remove_marketing_content_from_navigation.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="mooncakeTestEnvironment\migrations\0009_auto_20150917_1051.py" />
+    <Compile Include="mooncakeTestEnvironment\migrations\0010_add_mata_data.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="mooncakeTestEnvironment\migrations\0011_auto_20150917_1144.py" />
+    <Compile Include="mooncakeTestEnvironment\migrations\0012_add_metadata.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="mooncakeTestEnvironment\migrations\__init__.py" />
     <Compile Include="mooncakeTestEnvironment\models.py" />
     <Compile Include="mooncakeTestEnvironment\tests.py" />
@@ -77,6 +88,7 @@
     <Folder Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\json\" />
     <Folder Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\json\contentJson\" />
     <Folder Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\json\navigationJson\" />
+    <Folder Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\json\metaJson\" />
     <Folder Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\json\recentUpdateJson\" />
     <Folder Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\json\tutorialOptionsJson\" />
     <Folder Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\json\videoLinkJson\" />
@@ -91,6 +103,8 @@
   <ItemGroup>
     <None Include="firstWebApp - Web Deploy.pubxml" />
     <None Include="firstWebApp - FTP.pubxml" />
+    <None Include="firstWebApp - Web Deploy %282%29.pubxml" />
+    <None Include="firstWebApp - FTP %282%29.pubxml" />
     <Content Include="mooncakeTestEnvironment\migrations\__pycache__\__init__.cpython-34.pyc" />
     <Content Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\img\ArmVMsAzureCLI_960.jpg" />
     <Content Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\img\Azure 云服务高级功能.png" />
@@ -188,6 +202,30 @@
     <Content Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\json\contentJson\virtualMachine.json" />
     <Content Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\json\contentJson\virtualNetwork.json" />
     <Content Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\json\contentJson\websites.json" />
+    <Content Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\json\metaJson\activeDirectory.json" />
+    <Content Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\json\metaJson\applicationGateway.json" />
+    <Content Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\json\metaJson\automation.json" />
+    <Content Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\json\metaJson\azureMySql.json" />
+    <Content Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\json\metaJson\backup.json" />
+    <Content Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\json\metaJson\batch.json" />
+    <Content Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\json\metaJson\cdn.json" />
+    <Content Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\json\metaJson\cloudServices.json" />
+    <Content Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\json\metaJson\eventHubs.json" />
+    <Content Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\json\metaJson\hdinsight.json" />
+    <Content Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\json\metaJson\mediaService.json" />
+    <Content Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\json\metaJson\mobileService.json" />
+    <Content Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\json\metaJson\multiFactorAuthentication.json" />
+    <Content Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\json\metaJson\notificationHubs.json" />
+    <Content Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\json\metaJson\redisCache.json" />
+    <Content Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\json\metaJson\scheduler.json" />
+    <Content Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\json\metaJson\serviceBus.json" />
+    <Content Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\json\metaJson\siteRecovery.json" />
+    <Content Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\json\metaJson\sqlDatabase.json" />
+    <Content Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\json\metaJson\storage.json" />
+    <Content Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\json\metaJson\trafficManager.json" />
+    <Content Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\json\metaJson\virtualMachine.json" />
+    <Content Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\json\metaJson\virtualNetwork.json" />
+    <Content Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\json\metaJson\websites.json" />
     <Content Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\json\navigationJson\activeDirectory.json" />
     <Content Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\json\navigationJson\automation.json" />
     <Content Include="mooncakeTestEnvironment\static\mooncakeTestEnvironment\json\navigationJson\backup.json" />
@@ -340,11 +378,6 @@
     <Content Include="app\templates\app\layout.html" />
     <Content Include="app\templates\app\login.html" />
     <Content Include="app\templates\app\loginpartial.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="readme.mht">
-      <SubType>WebBrowser</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Interpreter Include="env\">

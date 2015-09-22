@@ -10,6 +10,15 @@ class Service(models.Model):
         unique_together = (("service_id"),)
 
 
+class Meta_data(models.Model):
+    service = models.ForeignKey(Service)
+    meta_keywords = models.TextField()
+    meta_description = models.TextField()
+
+    class Meta:
+        unique_together = (("service"),)
+
+
 class Landing_page(models.Model):
     service = models.ForeignKey(Service)
     navigationJson = models.TextField()

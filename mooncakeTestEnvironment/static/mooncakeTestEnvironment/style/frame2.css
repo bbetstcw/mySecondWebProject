@@ -53,6 +53,10 @@ select {
 	*vertical-align: middle
 }
 
+a, a:link, a:visited {
+    color:#00a3d9;
+}
+
 @media print {
 	* {
 		background: transparent!important;
@@ -260,11 +264,11 @@ p {
 
 h1,h2 {
 	margin: 0 0 12px;
-	font-family: Microsoft YaHei, 黑体, Segoe UI, Helvetica, Arial;
+	font-family: Microsoft YaHei, 黑体, Segoe UI, Helvetica, Arial, !important;
 	font-weight: 400;
 	font-size: 32px;
 	line-height: 1.2em;
-	color: #323a45
+	color: #323a45, !important
 }
 
 h4 {
@@ -282,7 +286,7 @@ h5 {
 	font-weight: 400;
 	font-size: 14px;
 	line-height: 1.2em;
-	color: #505050
+	color: #5e6d81
 }
 
 p,li {
@@ -294,11 +298,11 @@ p,li {
 @media only screen and (min-width:45em) {
 	h1 {
 		margin: 0 0 12px;
-		font-family: Microsoft YaHei, 黑体, Segoe UI, Helvetica, Arial;
+		font-family: Microsoft YaHei, 黑体, Segoe UI, Helvetica, Arial !important;
 		font-weight: 400;
 		font-size: 36px;
 		line-height: 1.2em;
-		color: #505050
+		color: #323a45
 	}
 
 	h1.wa-heading-W08,.wa-heading-W08 {
@@ -311,7 +315,7 @@ p,li {
 		font-weight: 400;
 		font-size: 30px;
 		line-height: 1.2em;
-		color: #505050
+		color: #323a45
 	}
 }
 
@@ -481,6 +485,7 @@ select {
 }
 
 .wa-dropdown-container .wa-dropdown-value {
+    font-family: Microsoft YaHei, 'Segoe UI', Helvetica, Arial,黑体 !important;
 	display: inline-block;
 	line-height: 25px;
 	padding-left: 10px;
@@ -592,7 +597,6 @@ select {
 }
 .wa-navigationLeft>a {
 	font-family: Microsoft YaHei, Hiragino sans-serif GB, 黑体, Light;
-	font-weight: lighter;
 	font-size: 40px;
 	line-height: 1.2em;
 	color: #89919c;
@@ -602,7 +606,6 @@ select {
 @media only screen and (min-width:61.25em) {
     .wa-navigationLeft > a {
         font-family: Microsoft YaHei, 黑体, Segoe UI, Helvetica, Arial;
-        font-weight: lighter;
         font-size: 14px;
         line-height: 1.2em;
         color: #89919c;
@@ -628,7 +631,6 @@ select {
 .wa-navigationLeft>ul>li[data-control="toggle"]>a {
     font-size: 20px;
     font-family:Microsoft YaHei, Hiragoino sans GB, 黑体;
-    font-weight:bold;
     color:#5e6d81;
     position: relative
 }
@@ -674,7 +676,7 @@ select {
 .wa-navigationLeft > ul > li li a {
     font-size: 24px;
     font-weight:lighter;
-    font-family:Microsoft YaHei, Hiragino sans GB, 黑体;
+    font-family:Microsoft YaHei, Segoe UI, Helvetica, Arial, 黑体;
     line-height: 1.2em;
     color: #323a45;
     display: inline-block;
@@ -689,7 +691,7 @@ select {
         display: inline-block;
         margin: 3px 0;
         padding: 2px 0;
-        font-weight:400;
+        font-weight:500;
     }
 }
 

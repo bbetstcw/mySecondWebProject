@@ -40,6 +40,7 @@ urlpatterns = patterns('',
     url(r'newrecentupdate/(?P<counter>[0-9]+)/$', 'mooncakeTestEnvironment.views.newRecentUpdate', name='newRecentUpdate'),
     url(r'^editTutorialSelectList/(?P<service_id>\w+)/$', 'mooncakeTestEnvironment.views.editTutorialSelectList', name='editTutorialSelectList'),
     url(r'newTutorialOption/(?P<counter>[0-9]+)/$', 'mooncakeTestEnvironment.views.newTutorialOption', name='newTutorialOption'),
+    url(r'regenJson/$', 'mooncakeTestEnvironment.views.regenJson', name='regenJson'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
